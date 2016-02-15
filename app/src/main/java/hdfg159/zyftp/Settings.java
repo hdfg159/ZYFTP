@@ -1,8 +1,6 @@
 package hdfg159.zyftp;
 
-import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +16,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import hdfg159.zyftp.utils.SharedPreferencesUtils;
+
 
 /**
  * Created by ZZY2015 on 2016/1/29.
@@ -32,7 +32,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
     private Button reset;
     private Button readconfig;
     private FloatingActionButton floatingActionButton;
-    private SharedPreferences mySharedPreferences;
     private CheckBox nmvisit;
     private SwipeRefreshLayout clean;
 
@@ -42,7 +41,6 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
         setContentView(R.layout.settings);
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.settingcoordl);
-        mySharedPreferences = getSharedPreferences("hdfg159.zyftp_preferences", Activity.MODE_PRIVATE);
 
         toolbar = (Toolbar) findViewById(R.id.settingtoolbar);
         setSupportActionBar(toolbar);
@@ -71,13 +69,13 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
                 if (isChecked) {
                     textInputLayoutpasswords.getEditText().setEnabled(false);
                     textInputLayoutusername.getEditText().setEnabled(false);
-                    textInputLayoutpasswords.getEditText().setText(mySharedPreferences.getString("password", "admin"));
-                    textInputLayoutusername.getEditText().setText(mySharedPreferences.getString("username", "admin"));
+                    textInputLayoutpasswords.getEditText().setText(SharedPreferencesUtils.getString(Settings.this, "password", "admin"));
+                    textInputLayoutusername.getEditText().setText(SharedPreferencesUtils.getString(Settings.this, "username", "admin"));
                 } else {
                     textInputLayoutpasswords.getEditText().setEnabled(true);
                     textInputLayoutusername.getEditText().setEnabled(true);
-                    textInputLayoutpasswords.getEditText().setText(mySharedPreferences.getString("password", "admin"));
-                    textInputLayoutusername.getEditText().setText(mySharedPreferences.getString("username", "admin"));
+                    textInputLayoutpasswords.getEditText().setText(SharedPreferencesUtils.getString(Settings.this, "password", "admin"));
+                    textInputLayoutusername.getEditText().setText(SharedPreferencesUtils.getString(Settings.this, "username", "admin"));
                 }
             }
         });
@@ -109,7 +107,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
                         .setNegativeButton("确认", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if (mySharedPreferences.edit().clear().commit()) {
+                                if (SharedPreferencesUtils.clear(Settings.this)) {
                                     nmvisit.setChecked(false);
                                     Snackbar.make(coordinatorLayout, "重置成功", Snackbar.LENGTH_SHORT).show();
                                 }
@@ -131,13 +129,11 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
     }
 
     public void FbaWriteSharedPreferences() {
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putString("username", textInputLayoutusername.getEditText().getText().toString());
-        editor.putString("password", textInputLayoutpasswords.getEditText().getText().toString());
-        editor.putString("portNum", textInputLayoutport.getEditText().getText().toString());
-        editor.putString("chrootDir", textInputLayoutdir.getEditText().getText().toString());
-        editor.putBoolean("allow_anonymous", nmvisit.isChecked());
-        editor.commit();
+        SharedPreferencesUtils.putString(this, "username", textInputLayoutusername.getEditText().getText().toString());
+        SharedPreferencesUtils.putString(this, "password", textInputLayoutpasswords.getEditText().getText().toString());
+        SharedPreferencesUtils.putString(this, "portNum", textInputLayoutport.getEditText().getText().toString());
+        SharedPreferencesUtils.putString(this, "chrootDir", textInputLayoutdir.getEditText().getText().toString());
+        SharedPreferencesUtils.putBoolean(this, "allow_anonymous", nmvisit.isChecked());
         Snackbar.make(coordinatorLayout, "保存成功", Snackbar.LENGTH_LONG)
                 .setAction("关闭页面", new View.OnClickListener() {
                     @Override
@@ -148,11 +144,11 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
     }
 
     public void ReadSharedPreferences() {
-        textInputLayoutpasswords.getEditText().setText(mySharedPreferences.getString("password", "admin"));
-        textInputLayoutusername.getEditText().setText(mySharedPreferences.getString("username", "admin"));
-        textInputLayoutport.getEditText().setText(mySharedPreferences.getString("portNum", "2121"));
-        textInputLayoutdir.getEditText().setText(mySharedPreferences.getString("chrootDir", "/"));
-        nmvisit.setChecked(mySharedPreferences.getBoolean("allow_anonymous", false));
+        textInputLayoutpasswords.getEditText().setText(SharedPreferencesUtils.getString(Settings.this, "password", "admin"));
+        textInputLayoutusername.getEditText().setText(SharedPreferencesUtils.getString(Settings.this, "username", "admin"));
+        textInputLayoutport.getEditText().setText(SharedPreferencesUtils.getString(Settings.this, "portNum", "2121"));
+        textInputLayoutdir.getEditText().setText(SharedPreferencesUtils.getString(Settings.this, "chrootDir", "/"));
+        nmvisit.setChecked(SharedPreferencesUtils.getBoolean(Settings.this, "allow_anonymous", false));
         if (nmvisit.isChecked()) {
             textInputLayoutpasswords.getEditText().setEnabled(false);
             textInputLayoutusername.getEditText().setEnabled(false);

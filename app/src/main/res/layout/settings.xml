@@ -107,7 +107,7 @@
                         android:id="@+id/reset"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="重置设置" />
+                        android:text="重置所有设置" />
 
                     <android.support.v7.widget.AppCompatButton
                         android:id="@+id/readconfig"

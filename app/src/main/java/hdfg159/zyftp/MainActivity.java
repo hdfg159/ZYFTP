@@ -1,17 +1,16 @@
 package hdfg159.zyftp;
 
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -31,6 +30,14 @@ import android.widget.TextView;
 import com.swiftp.FsSettings;
 
 import java.net.InetAddress;
+import java.util.TimerTask;
+
+import hdfg159.zyftp.utils.ClipboardUtils;
+import hdfg159.zyftp.utils.CrashReporter;
+import hdfg159.zyftp.utils.DialogUtils;
+import hdfg159.zyftp.utils.SharedPreferencesUtils;
+import hdfg159.zyftp.utils.TimertaskUtils;
+import hdfg159.zyftp.utils.ToastUtil;
 
 public class MainActivity extends AppCompatActivity {
     private View coordinatorLayout;
@@ -44,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     private AppCompatTextView userconfig;
     private ImageView wifiimg;
     private SwitchCompat ftpswitch;
-    private NotificationManager nm;
     public static Context mm;
     public Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -71,12 +77,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main);
         mm = this;
 
-        nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        CrashHandler crashHandler = CrashHandler.getInstance();
-        crashHandler.init(getApplicationContext());
-
-        final AlertDialog newsalert = new AlertDialog.Builder(MainActivity.this).setTitle("更新日志").setMessage(R.string.newcontent).setNegativeButton("确定", null).create();
+        Crash();
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawlayout);
@@ -84,6 +85,14 @@ public class MainActivity extends AppCompatActivity {
 
         wifiinfo = (AppCompatTextView) findViewById(R.id.wifiinfo);
         ftpinfo = (AppCompatTextView) findViewById(R.id.ftpinfo);
+        ftpinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardUtils.Copy(MainActivity.this, ftpinfo.getText().toString());
+            }
+        });
+
+
         userconfig = (AppCompatTextView) findViewById(R.id.wifiuser);
         wifiimg = (ImageView) findViewById(R.id.wifiimg);
         ftpswitch = (SwitchCompat) findViewById(R.id.ftpswith);
@@ -103,9 +112,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.exitapp:
                         if (FsService.isRunning()) {
                             stopServer();
-                            nm.cancelAll();
                         }
-                        System.exit(0);
+                        finish();
                         break;
                     case R.id.aboutapp:
                         AlertDialog aboutalert = new AlertDialog.Builder(MainActivity.this).setTitle("关于")
@@ -113,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                                 .setPositiveButton("确定", null).setNegativeButton("更新日志", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        newsalert.show();
+                                        DialogUtils.showPrompt(MainActivity.this, "更新日志", getString(R.string.newcontent), "确认");
                                     }
                                 }).create();
                         aboutalert.show();
@@ -124,19 +132,15 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.settings:
                         final Intent intent = new Intent(MainActivity.this, Settings.class);
                         if (FsService.isRunning()) {
-                            new AlertDialog.Builder(MainActivity.this)
-                                    .setTitle("提示")
-                                    .setMessage("服务正在运行，请关闭服务再进入设置")
-                                    .setPositiveButton("取消", null)
-                                    .setNegativeButton("关闭服务", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            stopServer();
-                                            updateUI();
-                                            ftpswitch.setChecked(false);
-                                            startActivity(intent);
-                                        }
-                                    }).show();
+                            DialogUtils.showAlertlr(MainActivity.this, getString(R.string.tips), getString(R.string.ServeisRunning), "取消", null, getString(R.string.StopServe), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    stopServer();
+                                    updateUI();
+                                    ftpswitch.setChecked(false);
+                                    startActivity(intent);
+                                }
+                            });
                         } else {
                             startActivity(intent);
                         }
@@ -172,6 +176,44 @@ public class MainActivity extends AppCompatActivity {
 
         updateUI();
         UiUpdateUtil.registerClient(handler);
+
+        viewupdate();
+    }
+
+    private void viewupdate() {
+        if (SharedPreferencesUtils.getBoolean(MainActivity.this, "firstupdate", true)) {
+            DialogUtils.showAlertlr(this, "更新日志", getString(R.string.newcontent), "确认", null, "不再提示", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SharedPreferencesUtils.putBoolean(MainActivity.this, "firstupdate", false);
+                }
+            });
+        }
+    }
+
+    public void Crash() {
+        CrashReporter crashReporter = new CrashReporter(getApplicationContext());
+        Thread.setDefaultUncaughtExceptionHandler(crashReporter);
+
+        crashReporter.setOnCrashListener(new CrashReporter.CrashListener() {
+            @Override
+            public void onCrash(Thread thread, Throwable ex) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        ToastUtil.showToast(getApplicationContext(), "程序出现异常\n1秒后自动退出程序！");
+                        Looper.loop();
+                    }
+                }).start();
+                TimertaskUtils.delaytask(new TimerTask() {
+                    @Override
+                    public void run() {
+                        System.exit(0);
+                    }
+                }, 1000);
+            }
+        });
     }
 
     private void updateUI() {
@@ -187,13 +229,12 @@ public class MainActivity extends AppCompatActivity {
         if (isRunning) {
             InetAddress address = FsService.getLocalInetAddress();
             if (address != null) {
-                SharedPreferences preferences = getSharedPreferences("hdfg159.zyftp_preferences", Context.MODE_PRIVATE);
-                String name = preferences.getString("username", "admin");
-                String password = preferences.getString("password", "admin");
-                String dir = preferences.getString("chrootDir", "/");
+                String name = SharedPreferencesUtils.getString(this, "username", "admin");
+                String password = SharedPreferencesUtils.getString(this, "password", "admin");
+                String dir = SharedPreferencesUtils.getString(this, "chrootDir", "/");
                 address = FsService.getLocalInetAddress();
                 ftpinfo.setText("ftp://" + address.getHostAddress() + ":" + FsSettings.getPortNumber());
-                if (preferences.getBoolean("allow_anonymous", false)) {
+                if (SharedPreferencesUtils.getBoolean(this, "allow_anonymous", false)) {
                     userconfig.setText("匿名模式" + "\n" + "\n" + "访问路径:" + dir);
                 } else {
                     userconfig.setText("用户名:" + name + "\n" + "密码:" + password + "\n" + "访问路径:" + dir);
@@ -227,9 +268,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if (FsService.isRunning()) {
                     stopServer();
-                    nm.cancelAll();
                 }
-                System.exit(0);
+                finish();
             }
         }).setPositiveButton("取消", null).setTitle("提示").setMessage("确认退出吗?").show();
     }
@@ -238,6 +278,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         UiUpdateUtil.unregisterClient(handler);
+        System.exit(0);
+//        Activity finish后执行完全退出程序
     }
 
     @Override
