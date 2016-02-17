@@ -34,7 +34,7 @@
                     android:layout_below="@+id/wifiimg"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:text="暂时没有链接WiFi" />
+                    android:text="@string/wifiinfo" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/ftpinfo"
@@ -44,7 +44,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
                     android:onClick="true"
-                    android:text="FTP信息"
+                    android:text="@string/ftpinfo"
                     android:visibility="invisible" />
 
                 <android.support.v7.widget.AppCompatTextView
@@ -55,7 +55,7 @@
                     android:layout_below="@+id/ftpinfo"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="15dp"
-                    android:text="FTP用户信息\n\n"
+                    android:text="@string/wifiuser"
                     android:visibility="invisible" />
 
                 <android.support.v7.widget.SwitchCompat
@@ -66,7 +66,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50dp"
                     android:checked="false"
-                    android:text="远程管理开关" />
+                    android:text="@string/ftpswith" />
 
             </RelativeLayout>
         </ScrollView>

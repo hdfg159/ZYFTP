@@ -40,7 +40,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="35dp"
                         android:gravity="center"
-                        android:text="请在下面输入你设置的内容"
+                        android:text="@string/input_setting"
                         android:textSize="20dp" />
 
                     <android.support.design.widget.TextInputLayout
@@ -53,7 +53,7 @@
                             android:id="@+id/username"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="请输入用户名"
+                            android:hint="@string/username"
                             android:inputType="text" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -66,7 +66,7 @@
                             android:id="@+id/password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="请输入密码"
+                            android:hint="@string/password"
                             android:inputType="text" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -79,7 +79,7 @@
                             android:id="@+id/port"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="请输入端口号"
+                            android:hint="@string/port"
                             android:inputType="text" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -92,7 +92,7 @@
                             android:id="@+id/dir"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="请输入路径"
+                            android:hint="@string/dir"
                             android:inputType="text" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -101,19 +101,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:checked="false"
-                        android:text="匿名访问" />
+                        android:text="@string/nmvisit" />
 
                     <android.support.v7.widget.AppCompatButton
                         android:id="@+id/reset"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="重置所有设置" />
+                        android:text="@string/reset" />
 
                     <android.support.v7.widget.AppCompatButton
                         android:id="@+id/readconfig"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="读取上次设置" />
+                        android:text="@string/readconfig" />
                 </LinearLayout>
             </ScrollView>
         </android.support.v4.widget.SwipeRefreshLayout>

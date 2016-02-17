@@ -35,9 +35,24 @@
         版本-1.1\n
         +2016.2.7 设置页面下拉刷新清空设置选项，适配小屏幕，改变程序退出方式，主界面布局调整。\n\n
         版本-1.2\n
-        +2016.2.15 改变程序退出方式,主界面功能小更新\n
+        +2016.2.15 改变程序退出方式,主界面功能小更新\n\n
+        版本-1.3\n
+        +2016.2.17 修复旋转屏幕出现问题\n
     </string>
     <string name="tips">提示</string>
     <string name="ServeisRunning">服务正在运行，请关闭服务再进入设置</string>
     <string name="StopServe">关闭服务</string>
+    <string name="update_content">更新日志</string>
+    <string name="readconfig">读取上次设置</string>
+    <string name="reset">重置所有设置</string>
+    <string name="password">请输入密码</string>
+    <string name="username">请输入用户名</string>
+    <string name="input_setting">请在下面输入你设置的内容</string>
+    <string name="nmvisit">匿名访问</string>
+    <string name="dir">请输入路径</string>
+    <string name="port">请输入端口号</string>
+    <string name="ftpswith">远程管理开关</string>
+    <string name="wifiuser">FTP用户信息\n\n</string>
+    <string name="ftpinfo">FTP信息</string>
+    <string name="wifiinfo">暂时没有链接WiFi</string>
 </resources>

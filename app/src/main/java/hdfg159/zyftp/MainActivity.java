@@ -118,10 +118,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.aboutapp:
                         AlertDialog aboutalert = new AlertDialog.Builder(MainActivity.this).setTitle("关于")
                                 .setMessage(R.string.aboutcontnt)
-                                .setPositiveButton("确定", null).setNegativeButton("更新日志", new DialogInterface.OnClickListener() {
+                                .setPositiveButton("确定", null).setNegativeButton(getString(R.string.update_content), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        DialogUtils.showPrompt(MainActivity.this, "更新日志", getString(R.string.newcontent), "确认");
+                                        DialogUtils.showPrompt(MainActivity.this, getString(R.string.update_content), getString(R.string.newcontent), "确认");
                                     }
                                 }).create();
                         aboutalert.show();
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void viewupdate() {
         if (SharedPreferencesUtils.getBoolean(MainActivity.this, "firstupdate", true)) {
-            DialogUtils.showAlertlr(this, "更新日志", getString(R.string.newcontent), "确认", null, "不再提示", new DialogInterface.OnClickListener() {
+            DialogUtils.showAlertlr(this, getString(R.string.update_content), getString(R.string.newcontent), "确认", null, "不再提示", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     SharedPreferencesUtils.putBoolean(MainActivity.this, "firstupdate", false);
@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 finish();
             }
-        }).setPositiveButton("取消", null).setTitle("提示").setMessage("确认退出吗?").show();
+        }).setPositiveButton("取消", null).setTitle(getString(R.string.tips)).setMessage("确认退出吗?").show();
     }
 
     @Override
@@ -279,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         UiUpdateUtil.unregisterClient(handler);
         System.exit(0);
-//        Activity finish后执行完全退出程序
+//      //Activity finish后执行完全退出程序
     }
 
     @Override

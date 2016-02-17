@@ -4,4 +4,4 @@
     android:layout_height="245dp"
     android:background="@drawable/headbg1"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"></LinearLayout>
+    android:orientation="vertical" />
