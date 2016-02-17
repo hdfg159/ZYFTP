@@ -1,13 +1,13 @@
 package hdfg159.zyftp;
 
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import hdfg159.zyftp.utils.DialogUtils;
 import hdfg159.zyftp.utils.SharedPreferencesUtils;
 
 
@@ -48,14 +49,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("设置");
 
-        textInputLayoutusername = (TextInputLayout) findViewById(R.id.tiusername);
-        textInputLayoutpasswords = (TextInputLayout) findViewById(R.id.tiuserpasswords);
-        textInputLayoutport = (TextInputLayout) findViewById(R.id.tiuserport);
-        textInputLayoutdir = (TextInputLayout) findViewById(R.id.tidir);
-        textInputLayoutpasswords.setHint("密码 (1-16位字母或数字)");
-        textInputLayoutusername.setHint("用户名 (1-16位字母或数字)");
-        textInputLayoutport.setHint("端口号 (4位数字)");
-        textInputLayoutdir.setHint("输入路径 例如:/mnt/sdcard/");
+        initEditText();
 
         reset = (Button) findViewById(R.id.reset);
         reset.setOnClickListener(this);
@@ -87,6 +81,18 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
         clean.setOnRefreshListener(this);
     }
 
+    public void initEditText() {
+        textInputLayoutusername = (TextInputLayout) findViewById(R.id.tiusername);
+        textInputLayoutpasswords = (TextInputLayout) findViewById(R.id.tiuserpasswords);
+        textInputLayoutport = (TextInputLayout) findViewById(R.id.tiuserport);
+        textInputLayoutdir = (TextInputLayout) findViewById(R.id.tidir);
+        textInputLayoutpasswords.setHint("密码 (1-16位字母或数字)");
+        textInputLayoutusername.setHint("用户名 (1-16位字母或数字)");
+        textInputLayoutport.setHint("端口号 (4位数字)");
+        textInputLayoutdir.setHint("输入路径 例如:/mnt/sdcard/");
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -103,17 +109,15 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.reset:
-                new AlertDialog.Builder(this).setTitle("提示").setMessage("确认重置?将会丢失之前的设置")
-                        .setNegativeButton("确认", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (SharedPreferencesUtils.clear(Settings.this)) {
-                                    nmvisit.setChecked(false);
-                                    Snackbar.make(coordinatorLayout, "重置成功", Snackbar.LENGTH_SHORT).show();
-                                }
-                            }
-                        }).setPositiveButton("取消", null).show();
-
+                DialogUtils.showAlertTwo(this, getString(R.string.tips), "确认重置?将会丢失之前的设置", "确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (SharedPreferencesUtils.clear(Settings.this)) {
+                            nmvisit.setChecked(false);
+                            Snackbar.make(coordinatorLayout, "重置成功", Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                }, "取消", null);
                 break;
             case R.id.fab:
                 if ((textInputLayoutdir.getEditText().getText().length() != 0) && (textInputLayoutpasswords.getEditText().getText().length() != 0) && (textInputLayoutusername.getEditText().getText().length() != 0) && (textInputLayoutport.getEditText().getText().length() == 4)) {
@@ -166,5 +170,15 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
         textInputLayoutport.getEditText().setText("");
         textInputLayoutdir.getEditText().setText("");
         clean.setRefreshing(false);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+           //什么都不做
+        } else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+           //什么都不做
+        }
     }
 }
