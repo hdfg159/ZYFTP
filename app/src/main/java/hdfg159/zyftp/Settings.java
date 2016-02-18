@@ -1,6 +1,7 @@
 package hdfg159.zyftp;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -30,8 +31,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
     private TextInputLayout textInputLayoutdir;
     private Toolbar toolbar;
     private CoordinatorLayout coordinatorLayout;
-    private Button reset;
-    private Button readconfig;
+    private Button reset, readconfig, selectdir;
     private FloatingActionButton floatingActionButton;
     private CheckBox nmvisit;
     private SwipeRefreshLayout clean;
@@ -55,6 +55,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
         reset.setOnClickListener(this);
         readconfig = (Button) findViewById(R.id.readconfig);
         readconfig.setOnClickListener(this);
+        selectdir = (Button) findViewById(R.id.selectdir);
+        selectdir.setOnClickListener(this);
 
         nmvisit = (CheckBox) findViewById(R.id.nmvisit);
         nmvisit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -129,6 +131,10 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
             case R.id.readconfig:
                 ReadSharedPreferences();
                 break;
+            case R.id.selectdir:
+                Intent intent = new Intent(Settings.this, FileDirectorySelected.class);
+                startActivityForResult(intent, 1);
+                break;
         }
     }
 
@@ -176,9 +182,20 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-           //什么都不做
+            //什么都不做
         } else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-           //什么都不做
+            //什么都不做
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (1 == requestCode) {
+            Bundle bundle = null;
+            if (data != null && (bundle = data.getExtras()) != null) {
+                textInputLayoutdir.getEditText().setText(bundle.getString("file")+"/");
+            }
         }
     }
 }

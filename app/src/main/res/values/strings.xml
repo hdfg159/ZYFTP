@@ -35,9 +35,11 @@
         版本-1.1\n
         +2016.2.7 设置页面下拉刷新清空设置选项，适配小屏幕，改变程序退出方式，主界面布局调整。\n\n
         版本-1.2\n
-        +2016.2.15 改变程序退出方式,主界面功能小更新\n\n
+        +2016.2.15 改变程序退出方式,主界面功能小更新。\n\n
         版本-1.3\n
-        +2016.2.17 修复旋转屏幕出现问题\n
+        +2016.2.17 修复旋转屏幕出现问题。\n\n
+        版本-2.0 final\n
+        +2016.2.18 设置页面增加选择路径。\n
     </string>
     <string name="tips">提示</string>
     <string name="ServeisRunning">服务正在运行，请关闭服务再进入设置</string>
@@ -55,4 +57,6 @@
     <string name="wifiuser">FTP用户信息\n\n</string>
     <string name="ftpinfo">FTP信息</string>
     <string name="wifiinfo">暂时没有链接WiFi</string>
+    <string name="selectdir">选择路径</string>
+    <string name="selecteddir">当前目录：</string>
 </resources>

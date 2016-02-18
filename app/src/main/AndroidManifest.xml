@@ -35,10 +35,12 @@
                 <action android:name="com.swiftp.FTPSERVER_STOPPED" />
             </intent-filter>
         </receiver>
+
         <activity
             android:name=".Settings"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".FileDirectorySelected" />
     </application>
 
 </manifest>

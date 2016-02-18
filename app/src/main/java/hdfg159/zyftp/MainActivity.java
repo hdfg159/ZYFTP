@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Looper.prepare();
-                        ToastUtil.showToast(getApplicationContext(), "程序出现异常\n1秒后自动退出程序！");
+                        ToastUtil.showToast(getApplicationContext(), "程序出现异常！");
                         Looper.loop();
                     }
                 }).start();
