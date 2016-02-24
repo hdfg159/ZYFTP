@@ -1,4 +1,4 @@
-package hdfg159.zyftp;
+package hdfg159.zyftp.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import hdfg159.zyftp.R;
+import hdfg159.zyftp.ui.StatusBarCompat;
 import hdfg159.zyftp.utils.DialogUtils;
 import hdfg159.zyftp.utils.SharedPreferencesUtils;
 

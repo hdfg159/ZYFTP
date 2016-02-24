@@ -35,7 +35,7 @@
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp">
 
-                    <android.support.v7.widget.AppCompatTextView
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="35dp"
@@ -47,7 +47,7 @@
                         android:id="@+id/tiusername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="60dp">
+                        android:layout_marginTop="35dp">
 
                         <EditText
                             android:id="@+id/username"
@@ -102,32 +102,45 @@
                                 android:inputType="text" />
                         </android.support.design.widget.TextInputLayout>
 
-                        <Button
+                        <hdfg159.zyftp.widget.Button.Button
                             android:id="@+id/selectdir"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="52dp"
                             android:layout_weight="1.5"
-                            android:text="@string/selectdir" />
+                            android:text="@string/selectdir"
+                            android:textColor="#e1ffffff"
+                            android:textSize="15sp"
+                            app:gTouchEffect="press" />
                     </LinearLayout>
 
-                    <android.support.v7.widget.AppCompatCheckBox
+                    <CheckBox
                         android:id="@+id/nmvisit"
+                        android:layout_marginTop="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:checked="false"
                         android:text="@string/nmvisit" />
 
-                    <android.support.v7.widget.AppCompatButton
+                    <hdfg159.zyftp.widget.Button.Button
                         android:id="@+id/reset"
+                        android:layout_marginTop="8dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/reset" />
+                        android:layout_height="52dp"
+                        android:text="@string/reset"
+                        android:textColor="#e1ffffff"
+                        android:textSize="15sp"
+                        app:gTouchEffect="press" />
 
-                    <android.support.v7.widget.AppCompatButton
+                    <hdfg159.zyftp.widget.Button.Button
                         android:id="@+id/readconfig"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/readconfig" />
+                        android:layout_height="52dp"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/readconfig"
+                        android:textColor="#e1ffffff"
+                        android:textSize="15sp"
+                        android:layout_marginBottom="20dp"
+                        app:gTouchEffect="press" />
                 </LinearLayout>
             </ScrollView>
         </android.support.v4.widget.SwipeRefreshLayout>
@@ -139,7 +152,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
         android:src="@drawable/ic_done" />
 </android.support.design.widget.CoordinatorLayout>

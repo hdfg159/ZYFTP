@@ -6,4 +6,12 @@
         <item name="colorAccent">@color/primary_dark</item>
     </style>
     <style name="AppTheme" parent="@style/BaseAppTheme"/>
+
+    <!--按钮-->
+    <style name="ZYFTP.Widget.Button" parent="android:Widget.Button">
+        <item name="gTouchColor">#42000000</item>
+        <item name="gTouchEffect">auto</item>
+        <item name="gTouchCornerRadius">@dimen/button_radius</item>
+        <item name="android:background">@color/primary_dark</item>
+    </style>
 </resources>

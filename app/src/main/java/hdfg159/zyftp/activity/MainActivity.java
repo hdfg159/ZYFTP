@@ -1,4 +1,4 @@
-package hdfg159.zyftp;
+package hdfg159.zyftp.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,7 +17,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.util.Linkify;
@@ -32,6 +31,10 @@ import com.swiftp.FsSettings;
 import java.net.InetAddress;
 import java.util.TimerTask;
 
+import hdfg159.zyftp.FsService;
+import hdfg159.zyftp.R;
+import hdfg159.zyftp.ui.StatusBarCompat;
+import hdfg159.zyftp.ui.UiUpdateUtil;
 import hdfg159.zyftp.utils.ClipboardUtils;
 import hdfg159.zyftp.utils.CrashReporter;
 import hdfg159.zyftp.utils.DialogUtils;
@@ -46,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private WifiManager wifiManager;
-    private AppCompatTextView wifiinfo;
-    private AppCompatTextView ftpinfo;
-    private AppCompatTextView userconfig;
+    private TextView wifiinfo;
+    private TextView ftpinfo;
+    private TextView userconfig;
     private ImageView wifiimg;
     private SwitchCompat ftpswitch;
     public static Context mm;
@@ -83,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawlayout);
         coordinatorLayout = findViewById(R.id.coorlayout);
 
-        wifiinfo = (AppCompatTextView) findViewById(R.id.wifiinfo);
-        ftpinfo = (AppCompatTextView) findViewById(R.id.ftpinfo);
+        wifiinfo = (TextView) findViewById(R.id.wifiinfo);
+        ftpinfo = (TextView) findViewById(R.id.ftpinfo);
         ftpinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        userconfig = (AppCompatTextView) findViewById(R.id.wifiuser);
+        userconfig = (TextView) findViewById(R.id.wifiuser);
         wifiimg = (ImageView) findViewById(R.id.wifiimg);
         ftpswitch = (SwitchCompat) findViewById(R.id.ftpswith);
 
@@ -271,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 finish();
             }
-        }).setPositiveButton("取消", null).setTitle(getString(R.string.tips)).setMessage("确认退出吗?").show();
+        }).setPositiveButton("取消", null).setTitle("退出").setMessage("确认退出吗?").show();
     }
 
     @Override

@@ -5,7 +5,7 @@
     android:id="@+id/drawlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hdfg159.zyftp.MainActivity">
+    tools:context=".activity.MainActivity">
 
     <include layout="@layout/action_page" />
 

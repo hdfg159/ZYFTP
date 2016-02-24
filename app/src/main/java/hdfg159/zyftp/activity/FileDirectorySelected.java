@@ -1,4 +1,4 @@
-package hdfg159.zyftp;
+package hdfg159.zyftp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import hdfg159.zyftp.adapter.FileAdapter;
+import hdfg159.zyftp.R;
+import hdfg159.zyftp.ui.StatusBarCompat;
 import hdfg159.zyftp.utils.ToastUtil;
 
 /**

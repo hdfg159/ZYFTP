@@ -1,4 +1,4 @@
-package hdfg159.zyftp;
+package hdfg159.zyftp.ui;
 
 import java.util.ArrayList;
 import java.util.List;

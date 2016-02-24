@@ -1,4 +1,4 @@
-package hdfg159.zyftp;
+package hdfg159.zyftp.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.util.List;
+
+import hdfg159.zyftp.R;
 
 /**
  * Created by ZZY2015 on 2016/2/18.

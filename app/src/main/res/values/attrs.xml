@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    <!--ALL -->
+    <attr name="gBackgroundColor" format="color|reference" />
+
+    <attr name="gBorderSize" format="dimension" />
+
+    <attr name="gFont" format="string" />
+    <attr name="gCornerRadius" format="dimension" />
+    <attr name="gCornerRadiusTL" format="dimension" />
+    <attr name="gCornerRadiusTR" format="dimension" />
+    <attr name="gCornerRadiusBL" format="dimension" />
+    <attr name="gCornerRadiusBR" format="dimension" />
+
+    <attr name="gTouchColor" format="color" />
+    <attr name="gTouchCornerRadius" format="dimension" />
+    <attr name="gTouchCornerRadiusTL" format="dimension" />
+    <attr name="gTouchCornerRadiusTR" format="dimension" />
+    <attr name="gTouchCornerRadiusBL" format="dimension" />
+    <attr name="gTouchCornerRadiusBR" format="dimension" />
+    <attr name="gTouchDurationRate" format="float" />
+    <attr name="gTouchEffect" format="integer">
+        <enum name="none" value="0" />
+        <enum name="auto" value="1" />
+        <enum name="ease" value="2" />
+        <enum name="press" value="3" />
+        <enum name="ripple" value="4" />
+    </attr>
+    <!-- Button -->
+    <attr name="gButtonStyle" format="reference" />
+    <declare-styleable name="Button">
+        <attr name="gFont" />
+        <attr name="gTouchColor" />
+        <attr name="gTouchEffect" />
+        <attr name="gTouchCornerRadius" />
+        <attr name="gTouchCornerRadiusTL" />
+        <attr name="gTouchCornerRadiusTR" />
+        <attr name="gTouchCornerRadiusBL" />
+        <attr name="gTouchCornerRadiusBR" />
+        <attr name="gTouchDurationRate" />
+    </declare-styleable>
+
+</resources>

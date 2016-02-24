@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with SwiFTP.  If not, see <http://www.gnu.org/licenses/>.
  */
-package hdfg159.zyftp;
+package hdfg159.zyftp.ui;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -30,6 +30,10 @@ import android.util.Log;
 import com.swiftp.FsSettings;
 
 import java.net.InetAddress;
+
+import hdfg159.zyftp.FsService;
+import hdfg159.zyftp.R;
+import hdfg159.zyftp.activity.MainActivity;
 
 public class FsNotification extends BroadcastReceiver {
     private static final String TAG = FsNotification.class.getSimpleName();

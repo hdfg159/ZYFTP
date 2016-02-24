@@ -25,7 +25,7 @@ import android.preference.PreferenceManager;
 
 import java.io.File;
 
-import hdfg159.zyftp.MainActivity;
+import hdfg159.zyftp.activity.MainActivity;
 
 public class FsSettings {
     private final static String TAG = FsSettings.class.getSimpleName();

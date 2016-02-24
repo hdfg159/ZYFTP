@@ -1,4 +1,4 @@
-package hdfg159.zyftp;
+package hdfg159.zyftp.ui;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
