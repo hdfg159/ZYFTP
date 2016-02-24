@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 import hdfg159.zyftp.utils.ToastUtil;
 
@@ -26,13 +25,14 @@ import hdfg159.zyftp.utils.ToastUtil;
  */
 public class FileDirectorySelected extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private TextView currentdir;
-    private List<String> items = null;
-    private List<String> paths = null;
+    private List<String> items = new ArrayList<String>();
+    private List<String> paths = new ArrayList<String>();
     private ListView listView;
     private String curPath = "/";
     private FloatingActionButton fba;
     private Toolbar toolbar;
     private String rootpath = "/";
+    private FileAdapter fileAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,8 @@ public class FileDirectorySelected extends AppCompatActivity implements View.OnC
         initview();
 
         getFileDir("/");
+        fileAdapter = new FileAdapter(this, items, paths);
+        listView.setAdapter(fileAdapter);
     }
 
     public void initview() {
@@ -74,9 +76,9 @@ public class FileDirectorySelected extends AppCompatActivity implements View.OnC
     }
 
     public void getFileDir(String filepath) {
+        items.clear();
+        paths.clear();
         currentdir.setText("当前目录:" + filepath);
-        items = new ArrayList<String>();
-        paths = new ArrayList<String>();
         File f = new File(filepath);
         File[] files = f.listFiles();
         files = sortFile(files);
@@ -91,7 +93,6 @@ public class FileDirectorySelected extends AppCompatActivity implements View.OnC
             items.add(file.getName());
             paths.add(file.getPath());
         }
-        listView.setAdapter(new FileAdapter(this, items, paths));
     }
 
     @Override
@@ -101,11 +102,12 @@ public class FileDirectorySelected extends AppCompatActivity implements View.OnC
             if (file.isDirectory()) {
                 curPath = paths.get(position);
                 getFileDir(paths.get(position));
+                fileAdapter.notifyDataSetChanged();
             } else {
                 //可以打开文件
             }
         } else {
-            ToastUtil.showToast(this, "无法访问");
+            ToastUtil.showToast(this, "文件夹或文件不可读");
         }
     }
 
@@ -128,18 +130,12 @@ public class FileDirectorySelected extends AppCompatActivity implements View.OnC
 
     private class NameUpFileComparator implements Comparator<File> {
         public int compare(File lhs, File rhs) {
-            if (lhs.isDirectory() && rhs.isDirectory())
-                return lhs.getName().toLowerCase(Locale.CHINA)
-                        .compareTo(rhs.getName().toLowerCase(Locale.CHINA));
-            else {
-                if (lhs.isDirectory() && rhs.isFile()) {
-                    return -1;
-                } else if (lhs.isFile() && rhs.isDirectory()) {
-                    return 1;
-                } else {
-                    return lhs.getName().toLowerCase(Locale.CHINA)
-                            .compareTo(rhs.getName().toLowerCase(Locale.CHINA));
-                }
+            if (lhs.isDirectory() && !rhs.isDirectory()) {
+                return -1;
+            } else if (!lhs.isDirectory() && rhs.isDirectory()) {
+                return 1;
+            } else {
+                return lhs.getName().toLowerCase().compareTo(rhs.getName().toLowerCase());
             }
         }
     }

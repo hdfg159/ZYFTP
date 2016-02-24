@@ -9,8 +9,8 @@ android {
         applicationId "hdfg159.zyftp"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 16218
-        versionName '2.0 final'
+        versionCode 160223
+        versionName '2.1'
     }
     buildTypes {
         release {

@@ -28,6 +28,7 @@
         <ListView
             android:id="@+id/dirlist"
             android:layout_width="match_parent"
+            android:fastScrollEnabled="true"
             android:layout_height="wrap_content"></ListView>
 
     </LinearLayout>
