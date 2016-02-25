@@ -43,11 +43,7 @@ import hdfg159.zyftp.utils.TimertaskUtils;
 import hdfg159.zyftp.utils.ToastUtil;
 
 public class MainActivity extends AppCompatActivity {
-    private View coordinatorLayout;
     private DrawerLayout drawerLayout;
-    private Toolbar toolbar;
-    private NavigationView navigationView;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
     private WifiManager wifiManager;
     private TextView wifiinfo;
     private TextView ftpinfo;
@@ -55,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView wifiimg;
     private SwitchCompat ftpswitch;
     public static Context mm;
-    public Handler handler = new Handler() {
+    private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
@@ -82,9 +78,8 @@ public class MainActivity extends AppCompatActivity {
 
         Crash();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawlayout);
-        coordinatorLayout = findViewById(R.id.coorlayout);
 
         wifiinfo = (TextView) findViewById(R.id.wifiinfo);
         ftpinfo = (TextView) findViewById(R.id.ftpinfo);
@@ -101,11 +96,12 @@ public class MainActivity extends AppCompatActivity {
         ftpswitch = (SwitchCompat) findViewById(R.id.ftpswith);
 
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         StatusBarCompat.compat(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         actionBarDrawerToggle.syncState();
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

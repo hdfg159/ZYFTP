@@ -15,9 +15,6 @@ import java.util.List;
 
 import hdfg159.zyftp.R;
 
-/**
- * Created by ZZY2015 on 2016/2/18.
- */
 public class FileAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Bitmap mFolder, mFile;
@@ -61,11 +58,11 @@ public class FileAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        File f = new File(paths.get(position).toString());
-        if (items.get(position).toString().equals("返回根")) {
+        File f = new File(paths.get(position));
+        if (items.get(position).equals("返回根")) {
             holder.text.setText("返回根目录...");
             holder.icon.setImageBitmap(mFolder);
-        } else if (items.get(position).toString().equals("返回")) {
+        } else if (items.get(position).equals("返回")) {
             holder.text.setText("返回上一层...");
             holder.icon.setImageBitmap(mFolder);
         } else {

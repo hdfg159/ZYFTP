@@ -48,15 +48,13 @@ public class FsSettings {
     public static File getChrootDir() {
         final SharedPreferences sp = getSharedPreferences();
         String dirName = sp.getString("chrootDir", "/");
-        File chrootDir = new File(dirName);
-        return chrootDir;
+        return new File(dirName);
     }
 
     public static int getPortNumber() {
         final SharedPreferences sp = getSharedPreferences();
         String portString = sp.getString("portNum", "2121");
-        int port = Integer.valueOf(portString);
-        return port;
+        return Integer.valueOf(portString);
     }
 
     public static boolean shouldTakeFullWakeLock() {

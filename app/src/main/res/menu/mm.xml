@@ -12,7 +12,7 @@
 
     </group>
 
-    <item android:title="帮助">
+    <item android:title="@string/help">
         <menu>
             <item
                 android:id="@+id/aboutapp"

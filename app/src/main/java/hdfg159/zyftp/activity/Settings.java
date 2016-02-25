@@ -31,11 +31,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
     private TextInputLayout textInputLayoutpasswords;
     private TextInputLayout textInputLayoutport;
     private TextInputLayout textInputLayoutdir;
-    private Toolbar toolbar;
     private CoordinatorLayout coordinatorLayout;
-    private Button reset, readconfig, selectdir;
-    private FloatingActionButton floatingActionButton;
-    private CheckBox nmvisit;
+    private CheckBox AnonymousAccess;
     private SwipeRefreshLayout clean;
 
     @Override
@@ -45,7 +42,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.settingcoordl);
 
-        toolbar = (Toolbar) findViewById(R.id.settingtoolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.settingtoolbar);
         setSupportActionBar(toolbar);
         StatusBarCompat.compat(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -53,15 +50,15 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
 
         initEditText();
 
-        reset = (Button) findViewById(R.id.reset);
+        Button reset = (Button) findViewById(R.id.reset);
         reset.setOnClickListener(this);
-        readconfig = (Button) findViewById(R.id.readconfig);
+        Button readconfig = (Button) findViewById(R.id.readconfig);
         readconfig.setOnClickListener(this);
-        selectdir = (Button) findViewById(R.id.selectdir);
+        Button selectdir = (Button) findViewById(R.id.selectdir);
         selectdir.setOnClickListener(this);
 
-        nmvisit = (CheckBox) findViewById(R.id.nmvisit);
-        nmvisit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        AnonymousAccess = (CheckBox) findViewById(R.id.nmvisit);
+        AnonymousAccess.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -78,7 +75,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
             }
         });
 
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(this);
 
         clean = (SwipeRefreshLayout) findViewById(R.id.refreshclean);
@@ -117,7 +114,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (SharedPreferencesUtils.clear(Settings.this)) {
-                            nmvisit.setChecked(false);
+                            AnonymousAccess.setChecked(false);
                             Snackbar.make(coordinatorLayout, "重置成功", Snackbar.LENGTH_SHORT).show();
                         }
                     }
@@ -145,7 +142,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
         SharedPreferencesUtils.putString(this, "password", textInputLayoutpasswords.getEditText().getText().toString());
         SharedPreferencesUtils.putString(this, "portNum", textInputLayoutport.getEditText().getText().toString());
         SharedPreferencesUtils.putString(this, "chrootDir", textInputLayoutdir.getEditText().getText().toString());
-        SharedPreferencesUtils.putBoolean(this, "allow_anonymous", nmvisit.isChecked());
+        SharedPreferencesUtils.putBoolean(this, "allow_anonymous", AnonymousAccess.isChecked());
         Snackbar.make(coordinatorLayout, "保存成功", Snackbar.LENGTH_LONG)
                 .setAction("关闭页面", new View.OnClickListener() {
                     @Override
@@ -160,8 +157,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
         textInputLayoutusername.getEditText().setText(SharedPreferencesUtils.getString(Settings.this, "username", "admin"));
         textInputLayoutport.getEditText().setText(SharedPreferencesUtils.getString(Settings.this, "portNum", "2121"));
         textInputLayoutdir.getEditText().setText(SharedPreferencesUtils.getString(Settings.this, "chrootDir", "/"));
-        nmvisit.setChecked(SharedPreferencesUtils.getBoolean(Settings.this, "allow_anonymous", false));
-        if (nmvisit.isChecked()) {
+        AnonymousAccess.setChecked(SharedPreferencesUtils.getBoolean(Settings.this, "allow_anonymous", false));
+        if (AnonymousAccess.isChecked()) {
             textInputLayoutpasswords.getEditText().setEnabled(false);
             textInputLayoutusername.getEditText().setEnabled(false);
         } else {
@@ -172,7 +169,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void onRefresh() {
-        nmvisit.setChecked(false);
+        AnonymousAccess.setChecked(false);
         textInputLayoutpasswords.getEditText().setText("");
         textInputLayoutusername.getEditText().setText("");
         textInputLayoutport.getEditText().setText("");
@@ -196,7 +193,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
         if (1 == requestCode) {
             Bundle bundle = null;
             if (data != null && (bundle = data.getExtras()) != null) {
-                textInputLayoutdir.getEditText().setText(bundle.getString("file")+"/");
+                textInputLayoutdir.getEditText().setText(bundle.getString("file") + "/");
             }
         }
     }

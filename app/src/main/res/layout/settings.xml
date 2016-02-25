@@ -41,7 +41,7 @@
                         android:layout_marginTop="35dp"
                         android:gravity="center"
                         android:text="@string/input_setting"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/tiusername"
@@ -115,17 +115,17 @@
 
                     <CheckBox
                         android:id="@+id/nmvisit"
-                        android:layout_marginTop="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:checked="false"
                         android:text="@string/nmvisit" />
 
                     <hdfg159.zyftp.widget.Button.Button
                         android:id="@+id/reset"
-                        android:layout_marginTop="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
+                        android:layout_marginTop="8dp"
                         android:text="@string/reset"
                         android:textColor="#e1ffffff"
                         android:textSize="15sp"
@@ -135,11 +135,11 @@
                         android:id="@+id/readconfig"
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
+                        android:layout_marginBottom="20dp"
                         android:layout_marginTop="12dp"
                         android:text="@string/readconfig"
                         android:textColor="#e1ffffff"
                         android:textSize="15sp"
-                        android:layout_marginBottom="20dp"
                         app:gTouchEffect="press" />
                 </LinearLayout>
             </ScrollView>

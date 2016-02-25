@@ -18,8 +18,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import hdfg159.zyftp.adapter.FileAdapter;
 import hdfg159.zyftp.R;
+import hdfg159.zyftp.adapter.FileAdapter;
 import hdfg159.zyftp.ui.StatusBarCompat;
 import hdfg159.zyftp.utils.ToastUtil;
 
@@ -28,13 +28,10 @@ import hdfg159.zyftp.utils.ToastUtil;
  */
 public class FileDirectorySelected extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private TextView currentdir;
-    private List<String> items = new ArrayList<String>();
-    private List<String> paths = new ArrayList<String>();
+    private List<String> items;
+    private List<String> paths;
     private ListView listView;
     private String curPath = "/";
-    private FloatingActionButton fba;
-    private Toolbar toolbar;
-    private String rootpath = "/";
     private FileAdapter fileAdapter;
 
     @Override
@@ -44,12 +41,14 @@ public class FileDirectorySelected extends AppCompatActivity implements View.OnC
         initview();
 
         getFileDir("/");
-        fileAdapter = new FileAdapter(this, items, paths);
+        if (fileAdapter == null) {
+            fileAdapter = new FileAdapter(this, items, paths);
+        }
         listView.setAdapter(fileAdapter);
     }
 
     public void initview() {
-        toolbar = (Toolbar) findViewById(R.id.fileselecttoolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.fileselecttoolbar);
         setSupportActionBar(toolbar);
         StatusBarCompat.compat(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -60,7 +59,7 @@ public class FileDirectorySelected extends AppCompatActivity implements View.OnC
         listView = (ListView) findViewById(R.id.dirlist);
         listView.setOnItemClickListener(this);
 
-        fba = (FloatingActionButton) findViewById(R.id.selectfab);
+        FloatingActionButton fba = (FloatingActionButton) findViewById(R.id.selectfab);
         fba.setOnClickListener(this);
     }
 
@@ -79,20 +78,24 @@ public class FileDirectorySelected extends AppCompatActivity implements View.OnC
     }
 
     public void getFileDir(String filepath) {
-        items.clear();
-        paths.clear();
+        if (items != null && paths != null) {
+            items.clear();
+            paths.clear();
+        } else {
+            items = new ArrayList<>();
+            paths = new ArrayList<>();
+        }
         currentdir.setText("当前目录:" + filepath);
         File f = new File(filepath);
         File[] files = f.listFiles();
         files = sortFile(files);
-        if (!filepath.equals(rootpath)) {
+        if (!filepath.equals("/")) {
             items.add("返回根");
-            paths.add(rootpath);
+            paths.add("/");
             items.add("返回");
             paths.add(f.getParent());
         }
-        for (int i = 0; i < files.length; i++) {
-            File file = files[i];
+        for (File file : files) {
             items.add(file.getName());
             paths.add(file.getPath());
         }
@@ -107,7 +110,7 @@ public class FileDirectorySelected extends AppCompatActivity implements View.OnC
                 getFileDir(paths.get(position));
                 fileAdapter.notifyDataSetChanged();
             } else {
-                //可以打开文件
+                ToastUtil.showToast(FileDirectorySelected.this, "暂不支持打开文件");
             }
         } else {
             ToastUtil.showToast(this, "文件夹或文件不可读");
@@ -125,10 +128,9 @@ public class FileDirectorySelected extends AppCompatActivity implements View.OnC
     }
 
     public File[] sortFile(File[] files) {
-        List<File> listfile = Arrays.asList(files);
-        Collections.sort(listfile, new NameUpFileComparator()); // 名称升序
-        File[] array = listfile.toArray(new File[listfile.size()]);
-        return array;
+        List<File> lisle = Arrays.asList(files);
+        Collections.sort(lisle, new NameUpFileComparator()); // 名称升序
+        return lisle.toArray(new File[lisle.size()]);
     }
 
     private class NameUpFileComparator implements Comparator<File> {
