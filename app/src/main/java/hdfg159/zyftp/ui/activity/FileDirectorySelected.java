@@ -1,4 +1,4 @@
-package hdfg159.zyftp.activity;
+package hdfg159.zyftp.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,12 +26,12 @@ import hdfg159.zyftp.utils.ToastUtil;
  * Created by ZZY2015 on 2016/2/18.
  */
 public class FileDirectorySelected extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
-    private TextView currentdir;
     private List<String> items;
     private List<String> paths;
     private ListView listView;
     private String curPath = "/";
     private FileAdapter fileAdapter;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +47,12 @@ public class FileDirectorySelected extends AppCompatActivity implements View.OnC
     }
 
     public void initview() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.fileselecttoolbar);
+        toolbar = (Toolbar) findViewById(R.id.fileselecttoolbar);
         setSupportActionBar(toolbar);
         StatusBarCompat.compat(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("选择目录");
-
-        currentdir = (TextView) findViewById(R.id.selecteddir);
+        toolbar.setSubtitle("/");
 
         listView = (ListView) findViewById(R.id.dirlist);
         listView.setOnItemClickListener(this);
@@ -85,13 +83,13 @@ public class FileDirectorySelected extends AppCompatActivity implements View.OnC
             items = new ArrayList<>();
             paths = new ArrayList<>();
         }
-        currentdir.setText("当前目录:" + filepath);
+        toolbar.setSubtitle(filepath);
         File f = new File(filepath);
         File[] files = f.listFiles();
         files = sortFile(files);
         if (!filepath.equals("/")) {
-            items.add("返回根");
-            paths.add("/");
+//            items.add("返回根");
+//            paths.add("/");
             items.add("返回");
             paths.add(f.getParent());
         }
@@ -109,8 +107,9 @@ public class FileDirectorySelected extends AppCompatActivity implements View.OnC
                 curPath = paths.get(position);
                 getFileDir(paths.get(position));
                 fileAdapter.notifyDataSetChanged();
+                listView.setAdapter(fileAdapter);//进去文件夹时候要用，否则进去保留位置不变
             } else {
-                ToastUtil.showToast(FileDirectorySelected.this, "暂不支持打开文件");
+                ToastUtil.showToast(FileDirectorySelected.this, getString(R.string.dontopenfile));
             }
         } else {
             ToastUtil.showToast(this, "文件夹或文件不可读");
@@ -143,5 +142,23 @@ public class FileDirectorySelected extends AppCompatActivity implements View.OnC
                 return lhs.getName().toLowerCase().compareTo(rhs.getName().toLowerCase());
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.gc();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        System.gc();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        System.gc();
     }
 }

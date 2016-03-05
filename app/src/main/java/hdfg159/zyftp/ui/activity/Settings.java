@@ -1,4 +1,4 @@
-package hdfg159.zyftp.activity;
+package hdfg159.zyftp.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -87,10 +87,10 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
         textInputLayoutpasswords = (TextInputLayout) findViewById(R.id.tiuserpasswords);
         textInputLayoutport = (TextInputLayout) findViewById(R.id.tiuserport);
         textInputLayoutdir = (TextInputLayout) findViewById(R.id.tidir);
-        textInputLayoutpasswords.setHint("密码 (1-16位字母或数字)");
-        textInputLayoutusername.setHint("用户名 (1-16位字母或数字)");
-        textInputLayoutport.setHint("端口号 (4位数字)");
-        textInputLayoutdir.setHint("输入路径 例如:/mnt/sdcard/");
+        textInputLayoutpasswords.setHint(getString(R.string.passwordhint));
+        textInputLayoutusername.setHint(getString(R.string.usernamehint));
+        textInputLayoutport.setHint(getString(R.string.porthint));
+        textInputLayoutdir.setHint(getString(R.string.pathhint));
 
     }
 
@@ -110,7 +110,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.reset:
-                DialogUtils.showAlertTwo(this, getString(R.string.tips), "确认重置?将会丢失之前的设置", "确认", new DialogInterface.OnClickListener() {
+                DialogUtils.showAlertTwo(this, "重置", getString(R.string.reset_tips), "确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (SharedPreferencesUtils.clear(Settings.this)) {
@@ -196,5 +196,23 @@ public class Settings extends AppCompatActivity implements View.OnClickListener,
                 textInputLayoutdir.getEditText().setText(bundle.getString("file") + "/");
             }
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        System.gc();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.gc();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        System.gc();
     }
 }

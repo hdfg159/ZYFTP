@@ -1,6 +1,6 @@
 package com.swiftp;
 
-import hdfg159.zyftp.activity.MainActivity;
+import hdfg159.zyftp.ui.activity.MainActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;

@@ -63,7 +63,7 @@ public class FileAdapter extends BaseAdapter {
             holder.text.setText("返回根目录...");
             holder.icon.setImageBitmap(mFolder);
         } else if (items.get(position).equals("返回")) {
-            holder.text.setText("返回上一层...");
+            holder.text.setText("...");
             holder.icon.setImageBitmap(mFolder);
         } else {
             holder.text.setText(f.getName());

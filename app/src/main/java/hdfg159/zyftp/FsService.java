@@ -51,7 +51,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
-import hdfg159.zyftp.activity.MainActivity;
+import hdfg159.zyftp.ui.activity.MainActivity;
 import hdfg159.zyftp.ui.UiUpdateUtil;
 
 public class FsService extends Service implements Runnable {

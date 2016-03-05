@@ -5,7 +5,7 @@
     <string name="notif_server_starting">远程管理服务已启动</string>
     <string name="notif_title">FTP远程管理服务正在运行</string>
     <string name="notif_text">地址:%1$s</string>
-    <string name="stop_server">停止远程FTP服务</string>
+    <string name="stop_server">停止FTP服务</string>
     <string name="start_server">开启远程FTP服务</string>
     <string name="aboutcontnt">简介：ZYFTP是一个简单的FTP文件管理器,允许您的安卓设备运行文件传输服务器
         \n\n功能：自定义用户名、密码和端口号
@@ -43,7 +43,9 @@
         版本-2.1\n
         +2016.2.23 路径选择界面文件排序问题修复，修复进入目录滑动条不显示。\n\n
         版本-2.2\n
-        +2016.2.24 设置界面布局更新。\n
+        +2016.2.24 设置界面布局更新。\n\n
+        版本-2.3\n
+        +2016.3.3 布局代码优化，文件列表显示文字和位置问题\n\n
     </string>
     <string name="tips">提示</string>
     <string name="ServeisRunning">服务正在运行，请关闭服务再进入设置</string>
@@ -64,4 +66,11 @@
     <string name="selectdir">选择路径</string>
     <string name="selecteddir">当前目录：</string>
     <string name="help">帮助</string>
+    <string name="checknowifi">暂时没检测到wifi（点击图片进入wifi设置）</string>
+    <string name="passwordhint">密码 (1–16位字母或数字)</string>
+    <string name="usernamehint">用户名 (1–16位字母或数字)</string>
+    <string name="porthint">端口号 (4位数字)</string>
+    <string name="pathhint">输入路径 例如:/mnt/sdcard/</string>
+    <string name="dontopenfile">暂不支持打开文件</string>
+    <string name="reset_tips">确认重置?将会丢失之前的设置</string>
 </resources>

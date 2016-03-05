@@ -1,4 +1,4 @@
-package hdfg159.zyftp.activity;
+package hdfg159.zyftp.ui.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,7 +10,6 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -29,18 +28,14 @@ import android.widget.TextView;
 import com.swiftp.FsSettings;
 
 import java.net.InetAddress;
-import java.util.TimerTask;
 
 import hdfg159.zyftp.FsService;
 import hdfg159.zyftp.R;
 import hdfg159.zyftp.ui.StatusBarCompat;
 import hdfg159.zyftp.ui.UiUpdateUtil;
 import hdfg159.zyftp.utils.ClipboardUtils;
-import hdfg159.zyftp.utils.CrashReporter;
 import hdfg159.zyftp.utils.DialogUtils;
 import hdfg159.zyftp.utils.SharedPreferencesUtils;
-import hdfg159.zyftp.utils.TimertaskUtils;
-import hdfg159.zyftp.utils.ToastUtil;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -76,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main);
         mm = this;
 
-        Crash();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawlayout);
 
@@ -94,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         userconfig = (TextView) findViewById(R.id.wifiuser);
         wifiimg = (ImageView) findViewById(R.id.wifiimg);
         ftpswitch = (SwitchCompat) findViewById(R.id.ftpswith);
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -190,37 +182,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void Crash() {
-        CrashReporter crashReporter = new CrashReporter(getApplicationContext());
-        Thread.setDefaultUncaughtExceptionHandler(crashReporter);
-
-        crashReporter.setOnCrashListener(new CrashReporter.CrashListener() {
-            @Override
-            public void onCrash(Thread thread, Throwable ex) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Looper.prepare();
-                        ToastUtil.showToast(getApplicationContext(), "程序出现异常！");
-                        Looper.loop();
-                    }
-                }).start();
-                TimertaskUtils.delaytask(new TimerTask() {
-                    @Override
-                    public void run() {
-                        System.exit(0);
-                    }
-                }, 1000);
-            }
-        });
-    }
-
     private void updateUI() {
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         String wifiIdString = wifiInfo == null ? null : wifiInfo.getSSID();
         boolean isWifiReady = FsService.isConnectedUsingWifi();
         wifiinfo.setText(isWifiReady ? wifiIdString
-                : "暂时没检测到wifi（点击图片进入wifi设置）");
+                : getString(R.string.checknowifi));
         wifiimg.setImageResource(isWifiReady ? R.drawable.ic_wifiavaliable
                 : R.drawable.ic_nowifi);
         ftpswitch.setEnabled(isWifiReady);
@@ -270,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 finish();
             }
-        }).setPositiveButton("取消", null).setTitle("退出").setMessage("确认退出吗?").show();
+        }).setPositiveButton("取消", null).setTitle("退出").setMessage("确认退出吗").show();
     }
 
     @Override
@@ -285,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         UiUpdateUtil.unregisterClient(handler);
+        System.gc();
     }
 
     @Override
@@ -310,6 +278,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         UiUpdateUtil.unregisterClient(handler);
         unregisterReceiver(wifiReceiver);
+        System.gc();
     }
 
 }

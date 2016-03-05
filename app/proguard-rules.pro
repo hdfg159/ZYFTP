@@ -16,3 +16,4 @@
 #   public *;
 #}
 -keep class com.swiftp.server.**{*;}
+-optimizationpasses 7

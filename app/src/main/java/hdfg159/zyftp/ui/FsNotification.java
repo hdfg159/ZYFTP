@@ -33,7 +33,7 @@ import java.net.InetAddress;
 
 import hdfg159.zyftp.FsService;
 import hdfg159.zyftp.R;
-import hdfg159.zyftp.activity.MainActivity;
+import hdfg159.zyftp.ui.activity.MainActivity;
 
 public class FsNotification extends BroadcastReceiver {
     private static final String TAG = FsNotification.class.getSimpleName();
@@ -88,7 +88,7 @@ public class FsNotification extends BroadcastReceiver {
                 .setOngoing(true);
         Notification notification = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            nb.addAction(stopIcon, stopText, stopPendingIntent);
+//            nb.addAction(stopIcon, stopText, stopPendingIntent);
             notification = nb.build();
         } else {
             notification = nb.getNotification();
